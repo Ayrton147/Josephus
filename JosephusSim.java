@@ -29,7 +29,7 @@ public class JosephusSim {
          // generate, print, and save the random elimination count
          Random rand = new Random();
          int  eliminationCount = rand.nextInt(10) + 1;
-         System.out.println(eliminationCount);
+         System.out.println("=== Elimination count is " + eliminationCount + " ===");
 
       } catch(FileNotFoundException e) {
          System.out.println("Something went wrong with " + fileName);
@@ -51,7 +51,11 @@ public class JosephusSim {
    
    public boolean isOver() {
       // check if there's only one person left in the circle
-      return false;
+      if(size == 1) {
+         return false;
+      } else {
+         return true;
+      }
    }
    
    public String toString() {
