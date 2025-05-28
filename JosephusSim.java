@@ -11,20 +11,17 @@ public class JosephusSim {
       try {
          // load names from the file in order, generating a singly linked list of PersonNodes
          Scanner file = new Scanner(new File(fileName));
-         
          circle = new PersonNode(file.next());
          track = circle;
+         size = 1;
+         // make the ring circular by attaching last node's next to front
          while(file.hasNextLine()) {
             track.next = new PersonNode(file.next());
             track = track.next;
             size++;
-            if(!file.hasNextLine()) {
-               track.next = circle;
-            }
          }
-         // make the ring circular by attaching last node's next to front
-         
          // remember the last node as the one in front of the next to get eliminated
+         track.next = circle;
          
          // generate, print, and save the random elimination count
          Random rand = new Random();
@@ -36,30 +33,43 @@ public class JosephusSim {
       }
    }
    
-   // optional helper method for constructing the circle
-   private void add(String val) {
-   }
    
    public void eliminate() {
       // count to the elimination count
-      
+      for(int i = 1; i < eliminationCount; i++) {
+         track = track.next; 
+         circle = circle.next;
+      }
+
       // print who will be eliminated
+      System.out.println("Eliminated: " + track.next.name);
       
       // eliminate the person and update "front" of the circle and size
-
+      track.next = track.next.next;
+      size--;
    }
    
    public boolean isOver() {
       // check if there's only one person left in the circle
-      if(size == 1) {
-         return false;
-      } else {
-         return true;
-      }
+      return size == 1;
    }
    
    public String toString() {
       // if there's only one person left, print them as the last survivor
+      if(circle == null) {
+         return "";
+      } 
+      
+      String result = "";
+      if(isOver()) {
+         result += "Last Survivor:" + circle.name;
+      } else {
+         for(int i = 1; i <= size; i++) {
+            result += i + "-" + track.name + " ";
+            track = track.next;
+         } 
+      }
+      return result;
       
       // print the remaining survivors (watch out for infinite loop since list is circular)
       // for(int i = 1; i <= list.size(); i++) {
@@ -67,7 +77,6 @@ public class JosephusSim {
 //                System.out.print(i + " " + file.next() + ", ");
 //             }
 //       }
-      return "";
    }
 
 }
