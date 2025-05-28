@@ -12,9 +12,14 @@ public class JosephusSim {
          // load names from the file in order, generating a singly linked list of PersonNodes
          Scanner file = new Scanner(new File(fileName));
          
-         for(int i = 1; i <= 10; i++) {
-            if(file.hasNextLine()) {
-               System.out.print(i + " " + file.next() + ", ");
+         circle = new PersonNode(file.next());
+         track = circle;
+         while(file.hasNextLine()) {
+            track.next = new PersonNode(file.next());
+            track = track.next;
+            size++;
+            if(!file.hasNextLine()) {
+               track.next = circle;
             }
          }
          // make the ring circular by attaching last node's next to front
@@ -22,6 +27,9 @@ public class JosephusSim {
          // remember the last node as the one in front of the next to get eliminated
          
          // generate, print, and save the random elimination count
+         Random rand = new Random();
+         int  eliminationCount = rand.nextInt(10) + 1;
+         System.out.println(eliminationCount);
 
       } catch(FileNotFoundException e) {
          System.out.println("Something went wrong with " + fileName);
@@ -50,7 +58,11 @@ public class JosephusSim {
       // if there's only one person left, print them as the last survivor
       
       // print the remaining survivors (watch out for infinite loop since list is circular)
-
+      // for(int i = 1; i <= list.size(); i++) {
+//             if(file.hasNextLine()) {
+//                System.out.print(i + " " + file.next() + ", ");
+//             }
+//       }
       return "";
    }
 
