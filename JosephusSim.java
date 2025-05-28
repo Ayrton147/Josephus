@@ -12,6 +12,11 @@ public class JosephusSim {
          // load names from the file in order, generating a singly linked list of PersonNodes
          Scanner file = new Scanner(new File(fileName));
          
+         for(int i = 1; i <= 10; i++) {
+            if(file.hasNextLine()) {
+               System.out.print(i + " " + file.next() + ", ");
+            }
+         }
          // make the ring circular by attaching last node's next to front
          
          // remember the last node as the one in front of the next to get eliminated
