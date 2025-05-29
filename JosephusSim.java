@@ -27,7 +27,10 @@ public class JosephusSim {
          
          // generate, print, and save the random elimination count
          eliminationCount = (int)(Math.random() * size) + 1;
-         System.out.println("=== Elimination count is " + eliminationCount + " ===");
+         if(eliminationCount == 21) {
+            eliminationCount = 0;
+         }
+         System.out.println("=== Elimination count is " + (eliminationCount + 1) + " ===");
 
       } catch(FileNotFoundException e) {
          System.out.println("Something went wrong with " + fileName);
