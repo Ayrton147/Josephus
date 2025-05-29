@@ -12,20 +12,21 @@ public class JosephusSim {
          // load names from the file in order, generating a singly linked list of PersonNodes
          Scanner file = new Scanner(new File(fileName));
          circle = new PersonNode(file.next());
-         track = circle;
+         PersonNode current = circle;
          size = 1;
          // make the ring circular by attaching last node's next to front
          while(file.hasNextLine()) {
-            track.next = new PersonNode(file.next());
-            track = track.next;
+            current.next = new PersonNode(file.next());
+            current = current.next;
             size++;
          }
          // remember the last node as the one in front of the next to get eliminated
-         track.next = circle;
+         current.next = circle;
+         
+         track = current;
          
          // generate, print, and save the random elimination count
-         Random rand = new Random();
-         int  eliminationCount = rand.nextInt(10) + 1;
+         eliminationCount = (int)(Math.random() * size) + 1;
          System.out.println("=== Elimination count is " + eliminationCount + " ===");
 
       } catch(FileNotFoundException e) {
@@ -37,15 +38,22 @@ public class JosephusSim {
    public void eliminate() {
       // count to the elimination count
       for(int i = 1; i < eliminationCount; i++) {
-         track = track.next; 
-         circle = circle.next;
+         track = track.next;
       }
 
       // print who will be eliminated
+      PersonNode eliminated = track.next;
       System.out.println("Eliminated: " + track.next.name);
       
+      if(eliminated == circle) {
+         circle = circle.next;
+      }
+      
+      track.next = eliminated.next;
+      
       // eliminate the person and update "front" of the circle and size
-      track.next = track.next.next;
+      track = track.next;
+      
       size--;
    }
    
@@ -53,30 +61,32 @@ public class JosephusSim {
       // check if there's only one person left in the circle
       return size == 1;
    }
-   
+ 
+      
    public String toString() {
-      // if there's only one person left, print them as the last survivor
       if(circle == null) {
          return "";
       } 
       
-      String result = "";
+      // if there's only one person left, print them as the last survivor
+      
       if(isOver()) {
-         result += "Last Survivor:" + circle.name;
-      } else {
-         for(int i = 1; i <= size; i++) {
-            result += i + "-" + track.name + " ";
-            track = track.next;
-         } 
-      }
-      return result;
+         return track.name + " is the last survivor!";
+      } 
       
       // print the remaining survivors (watch out for infinite loop since list is circular)
-      // for(int i = 1; i <= list.size(); i++) {
-//             if(file.hasNextLine()) {
-//                System.out.print(i + " " + file.next() + ", ");
-//             }
-//       }
+
+      String result = "Remaining survivors: ";
+      PersonNode temp = track;
+      for(int i = 1; i <= size; i++){
+         result += i + "-" + temp.name;
+         if(i < size) {
+            result += ", ";
+         }
+         temp = temp.next;
+      }
+      return result;
    }
+   
 
 }
