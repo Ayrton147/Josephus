@@ -26,11 +26,11 @@ public class JosephusSim {
          track = current;
          
          // generate, print, and save the random elimination count
-         eliminationCount = (int)(Math.random() * size) + 1;
-         if(eliminationCount == 21) {
+         eliminationCount = (int)(Math.random() * size) + 1; //make the random number right under the size
+         if(eliminationCount == 21) { // if it the number is 21 make it into zero
             eliminationCount = 0;
          }
-         System.out.println("=== Elimination count is " + (eliminationCount + 1) + " ===");
+         System.out.println("=== Elimination count is " + (eliminationCount + 1) + " ==="); // it kept remove the person one number off so just add one in here to make sure it is prining the "right" number
 
       } catch(FileNotFoundException e) {
          System.out.println("Something went wrong with " + fileName);
@@ -57,7 +57,7 @@ public class JosephusSim {
       // eliminate the person and update "front" of the circle and size
       track = track.next;
       
-      size--;
+      size--; // decrease the size of the circle
    }
    
    public boolean isOver() {
